@@ -1,4 +1,4 @@
-##### *Note that this is my fork of [Kohana](https://github.com/kohana/kohana) which includes the following custom custom changes I've made.*
+##### *Note that this is my fork of [Kohana](https://github.com/kohana/kohana) which includes the following custom changes I've made.*
 - *The codebase does not live in the web root.*
 - *The bootstrap includes different files and configs based on the environment. This allows for more diversity between environments.*
 - *Various bootstrap values are now located in (and loaded from) configs.*
@@ -8,10 +8,10 @@
 
 ##### *Starting an application*
 - *Clone it.*
+- *Update your git submodules using `git submodules update --init --recursive`.*
 - *Point your web server to the application/www/ directory.*
 - *Access your site in your browser and address any installation needs.*
 - *When you get all green, remove application/www/install.php and refresh.*
-- *Update your git submodules using `git submodules update --init --recursive`.*
 - *Further details can be found in Kohana's documentation.*
 
 ##### *Developing on my fork*
