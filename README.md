@@ -1,9 +1,23 @@
-_Note that this is my fork of Kohana which includes custom changes I prefer. Mainly..._
-- The codebase does not live in the web root.
-- The bootstrap allows for includes and config values based on the currently running environment.
-- Various bootstrap values are now located in configs.
-- By my convention, directly public facing controller classes live in application/classes/Controller/Public/. Directly facing does not include classes that are extended that still handle a request. It's mainly to know what controllers can be publicly "touched".
-- Will contain classes that are reusable amongst my applications but do not belong in a standalone module although this should be rare.*
+*__Note that this is my fork of Kohana which includes custom changes I prefer. Mainly...__*
+- *The codebase does not live in the web root.*
+- *The bootstrap allows for includes and config values based on the currently running environment.*
+- *Various bootstrap values are now located in configs.*
+- *By my convention, public facing controller classes live in application/classes/Controller/Public/. Public facing means controllers that are actually "touched" by a request. Public facing does not have to include classes that are extended that handle a request for a child class that was actually hit. This allows us to keep controller related classes and controllers separate.*
+- *Will contain classes that are reusable amongst my applications but do not belong in a standalone module although this should be rare.*
+- *The rest of Kohana should be the same...*
+
+### *Starting an application*
+- *Clone it.*
+- *Point your web server to the application/www/ directory.*
+- *Access your site in your browser and address any installation needs.*
+- *When you get all green, remove application/www/install.php and refresh.*
+- *Update your git submodules using `git submodules update --init --recursive`.*
+- *Further details can be found in Kohana's documentation.*
+
+### *Developing on my fork*
+- *Clone it.*
+- *Create a file called `.framework-dev` in the base directory. This avoids having to remove the application/www/install.php file that should stay in the repository.*
+- *Further details can be found in Kohana's documentation.*
 
 # Kohana PHP Framework
 
