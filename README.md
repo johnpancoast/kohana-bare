@@ -19,6 +19,8 @@
 - *Create a file called `.framework-dev` in the base directory. This avoids having to remove the application/www/install.php file that should stay in the repository.*
 - *Further details can be found in Kohana's documentation.*
 
+---------------------------------------------------
+
 # Kohana PHP Framework
 
 [Kohana](http://kohanaframework.org/) is an elegant, open source, and object oriented HMVC framework built using PHP5, by a team of volunteers. It aims to be swift, secure, and small.
