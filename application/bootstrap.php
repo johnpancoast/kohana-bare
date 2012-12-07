@@ -22,7 +22,7 @@ else
  * @link http://kohanaframework.org/guide/using.configuration
  * @link http://www.php.net/manual/timezones
  */
-date_default_timezone_set('America/Chicago');
+date_default_timezone_set('America/Los_Angeles');
 
 /**
  * Set the default locale.
@@ -74,24 +74,61 @@ if (isset($_SERVER['KOHANA_ENV']))
 	Kohana::$environment = constant('Kohana::'.strtoupper($_SERVER['KOHANA_ENV']));
 }
 
+
+// request host
+$host = preg_replace('/[^\w.]/', '', $_SERVER['HTTP_HOST']);
+
 /**
- * Initialize Kohana, setting the default options.
- *
- * The following options are available:
- *
- * - string   base_url    path, and optionally domain, of your application   NULL
- * - string   index_file  name of your index file, usually "index.php"       index.php
- * - string   charset     internal character set used for input and output   utf-8
- * - string   cache_dir   set the internal cache directory                   APPPATH/cache
- * - integer  cache_life  lifetime, in seconds, of items cached              60
- * - boolean  errors      enable or disable error handling                   TRUE
- * - boolean  profile     enable or disable internal profiling               TRUE
- * - boolean  caching     enable or disable internal caching                 FALSE
- * - boolean  expose      set the X-Powered-By header                        FALSE
+ * load kohana config manually. we do this because we've
+ * broken away from kohana standard by allowing several settings
+ * below to be set via config settings (instead of hardcoded
+ * here).  This includes Kohana::init(). However, Kohana::init()
+ * is what initializes our config in the first place. so we must
+ * manually create our config instead before we load init() via 
+ * config values
  */
-Kohana::init(array(
-	'base_url'   => '/kohana/',
-));
+Kohana::$config = new Config;
+
+/**
+ * load configs and bootstraps based on environment.
+ *
+ * Configs
+ * Attach multiple file readers to config. The stack is like so...
+ * example.com -> development|staging|production -> base -> normal
+ * Values from the top of the stack override the lower stack values.
+ */
+// normal config dir. we won't put anything at this level but modules do. so this is needed.
+Kohana::$config->attach(new Config_File('config'));
+
+// base config and include
+Kohana::$config->attach(new Config_File('config/base'));
+@include_once(APPPATH.'/includes/environments/base.php');
+
+// environment config
+switch (Kohana::$environment)
+{
+	case Kohana::PRODUCTION:
+		@include_once(APPPATH.'/includes/environments/production.php');
+		Kohana::$config->attach(new Config_File('config/production'));
+		break;
+	case Kohana::STAGING:
+		@include_once(APPPATH.'/includes/environments/staging.php');
+		Kohana::$config->attach(new Config_File('config/staging'));
+		break;
+	case Kohana::DEVELOPMENT:
+		@include_once(APPPATH.'/includes/environments/development.php');
+		Kohana::$config->attach(new Config_File('config/development'));
+		break;
+}
+
+// config and bootstrap specific to domain
+@include_once(APPPATH.'/includes/environments/'.$host.'.php');
+Kohana::$config->attach(new Config_File('config/'.$host));
+
+/**
+ * break from kohana norm and allow us to load init values from configs to allow for differences in env's
+ */
+Kohana::init(Kohana::$config->load('main.init'));
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
@@ -99,31 +136,29 @@ Kohana::init(array(
 Kohana::$log->attach(new Log_File(APPPATH.'logs'));
 
 /**
- * Attach a file reader to config. Multiple readers are supported.
+ * our secure cookie salt.
  */
-Kohana::$config->attach(new Config_File);
+Cookie::$salt = Kohana::$config->load('main.cookiesalt');
 
 /**
- * Enable modules. Modules are referenced by a relative or absolute path.
+ * break from kohana norm and allow us to load modules via config
+ * settings allowing for different modules in different env's
  */
-Kohana::modules(array(
-	// 'auth'       => MODPATH.'auth',       // Basic authentication
-	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-	// 'database'   => MODPATH.'database',   // Database access
-	// 'image'      => MODPATH.'image',      // Image manipulation
-	// 'minion'     => MODPATH.'minion',     // CLI Tasks
-	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-	// 'unittest'   => MODPATH.'unittest',   // Unit testing
-	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-	));
+Kohana::modules(Kohana::$config->load('kohana-modules')->as_array());
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
+ *
+ * note that ALL controller methods accessible from some sort of request (API, www) should be accessed
+ * from the 'classes/Controller/Public' directory. Basically if it's got an action_*() method then it
+ * belongs in the Public directory. Controller classes outside of Public are controller "related" but
+ * are not directly accessible from a request.
  */
+// default route. this should be our last route since it's a catch all.
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
-		'controller' => 'welcome',
+		'directory' => 'Public',
+		'controller' => 'Index',
 		'action'     => 'index',
 	));
