@@ -1,3 +1,10 @@
+_Note that this is my fork of Kohana which includes custom changes I prefer. Mainly..._
+- The codebase does not live in the web root.
+- The bootstrap allows for includes and config values based on the currently running environment.
+- Various bootstrap values are now located in configs.
+- By my convention, directly public facing controller classes live in application/classes/Controller/Public/. Directly facing does not include classes that are extended that still handle a request. It's mainly to know what controllers can be publicly "touched".
+- Will contain classes that are reusable amongst my applications but do not belong in a standalone module although this should be rare.*
+
 # Kohana PHP Framework
 
 [Kohana](http://kohanaframework.org/) is an elegant, open source, and object oriented HMVC framework built using PHP5, by a team of volunteers. It aims to be swift, secure, and small.
