@@ -1,12 +1,12 @@
-*__Note that this is my fork of Kohana which includes the following custom custom changes I've made.__*
+##### *Note that this is my fork of [Kohana](https://github.com/kohana/kohana) which includes the following custom custom changes I've made.*
 - *The codebase does not live in the web root.*
-- *The bootstrap allows for includes and config values based on the currently running environment.*
+- *The bootstrap includes different files and configs based on the environment. This allows for more diversity between environments.
 - *Various bootstrap values are now located in (and loaded from) configs.*
 - *By my convention, public facing controller classes live in application/classes/Controller/Public/. Public facing means controllers that are actually "touched" by a request. Public facing does not have to include classes that are extended that handle a request for a child class that was actually hit. This allows us to keep controller related classes and controllers separate.*
 - *Contains classes that are reusable amongst my applications but perhaps do not yet belong in a standalone module although that should be rare.*
 - *The rest of Kohana should be the same...*
 
-### *Starting an application*
+##### *Starting an application*
 - *Clone it.*
 - *Point your web server to the application/www/ directory.*
 - *Access your site in your browser and address any installation needs.*
@@ -14,7 +14,7 @@
 - *Update your git submodules using `git submodules update --init --recursive`.*
 - *Further details can be found in Kohana's documentation.*
 
-### *Developing on my fork*
+##### *Developing on my fork*
 - *Clone it.*
 - *Create a file called `.framework-dev` in the base directory. This avoids having to remove the application/www/install.php file that should stay in the repository.*
 - *Further details can be found in Kohana's documentation.*
