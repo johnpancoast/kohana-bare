@@ -144,7 +144,7 @@ Cookie::$salt = Kohana::$config->load('main.cookiesalt');
  * break from kohana norm and allow us to load modules via config
  * settings allowing for different modules in different env's
  */
-Kohana::modules(Kohana::$config->load('kohana-modules')->as_array());
+Kohana::modules(Kohana::$config->load('modules')->as_array());
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
