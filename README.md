@@ -1,9 +1,9 @@
-*__Note that this is my fork of Kohana which includes custom changes I prefer. Mainly...__*
+*__Note that this is my fork of Kohana which includes the following custom custom changes I've made.__*
 - *The codebase does not live in the web root.*
 - *The bootstrap allows for includes and config values based on the currently running environment.*
-- *Various bootstrap values are now located in configs.*
+- *Various bootstrap values are now located in (and loaded from) configs.*
 - *By my convention, public facing controller classes live in application/classes/Controller/Public/. Public facing means controllers that are actually "touched" by a request. Public facing does not have to include classes that are extended that handle a request for a child class that was actually hit. This allows us to keep controller related classes and controllers separate.*
-- *Will contain classes that are reusable amongst my applications but do not belong in a standalone module although this should be rare.*
+- *Contains classes that are reusable amongst my applications but perhaps do not yet belong in a standalone module although that should be rare.*
 - *The rest of Kohana should be the same...*
 
 ### *Starting an application*
