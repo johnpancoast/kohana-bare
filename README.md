@@ -5,7 +5,7 @@ This is my fork of [https://github.com/kohana/kohana](https://github.com/kohana/
 
 ## Creating an application
 * Clone this repo.
-* Include submodules that your app needs. At the very least you'll need Kohana's [https://github.com/kohana/core](core). You can set these up using `git submodule...` and then running `git submodule update --init --recursive`. Alternatively there's a simple script at `./bin/add-submodules` that will do all of this for you.
+* Initialize the application. This entails removing the existing git repository, starting a fresh one, including any required submodules, and adding a copyright. You can either use the following script `./bin/initialize-application` or pick out the commands it runs and manually run the ones you want. Why remove the repository and start fresh you ask? Because this repository contains history from Kohana and my fork that is not relevant to your application. Your application should start from scratch as its own thing.
 * Point your domain to the application/www/ directory, access your domain in a browser, and resolve any issues Kohana has.
 * When you see all green, Kohana should be good and you can remove application/www/install.php. Refreshing your browser will give you a hello world.
 * By my convention, controllers that are touched *directly* from a request live in the application/classes/Controller/Public/ directory. This is to differentiate between controller classes that are actual controllers and controller classes that are related but not handling a request directly (parent classes of public classes are not hit directly ad thus not required to live in this directory).
