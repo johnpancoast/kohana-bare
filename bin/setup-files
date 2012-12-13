@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# cd to basedir
+BASEDIR=$( cd $(dirname $(dirname $0)/../.) && pwd)
+cd $BASEDIR
+
+# handle copyright
+year=$(date +%Y)
+orig_copy_year="${year}-$((year+1))"
+echo -n "Who is the copyright holder? "
+read copy_holder
+echo -n "What is the copyright year (${orig_copy_year})? "
+read  copy_year
+if [ -z "$copy_year" ]; then
+	copy_year=$orig_copy_year
+fi
+echo "${app_name} Copyright (c) ${copy_year} ${copy_holder}" > COPYRIGHT.md
+
+# remove readme
+rm -f README.md
+
+git commit -am "added copyright and removed readme"

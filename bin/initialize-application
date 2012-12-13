@@ -1,0 +1,8 @@
+#!/bin/bash
+
+BASEDIR=$( cd $(dirname $(dirname $0)/../.) && pwd)
+
+$BASEDIR/bin/setup-files
+$BASEDIR/bin/initialize-git
+
+chmod 777 application/{cache,logs}

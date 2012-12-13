@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Remove git related files while keeping .gitignores. Why do we remove git?
+# Because the .git repository includes Kohana's commits and my fork's commits
+# that are related to the Kohana framework and have nothing to do with your
+# application. Your application should be a fresh repository.
+
+# cd to basedir
+BASEDIR=$( cd $(dirname $(dirname $0)/../.) && pwd)
+cd $BASEDIR
+
+# warn user
+clear
+echo ""
+echo "!!! WARNING !!!"
+echo "This script is about to remove any directory called .git and any file called .gitmodule."
+echo "This means it's wiping your repository and starting a new one! You want to only do this when"
+echo "starting a new application. You've been warned!!!"
+echo ""
+echo -n "To continue, type 'continue': "
+read go
+if [ "x$go" != "xcontinue" ]; then
+	exit;
+fi
+
+# wipe git and start new
+for i in $(find . -name ".git*" ! -name ".gitignore"); do
+	rm -fr $i;
+done
+
+git init
+git add .
+git commit -m "initial Kohana files for application"
+
+./bin/add-submodules
+
+git commit -m "added submodules"
