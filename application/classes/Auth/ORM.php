@@ -81,7 +81,7 @@ class Auth_ORM extends Auth {
 
 		// If the passwords match, perform a login
 		$roles =  ORM::factory('Role')->where('name', '=', 'user-write')->or_where('name', '=', 'user-read')->find_all();
-		$role_ids;
+		$role_ids = array();
 		foreach ($roles AS $role)
 		{
 			$role_ids[] = $role->id;
