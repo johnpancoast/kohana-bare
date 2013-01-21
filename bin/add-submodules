@@ -1,63 +1,46 @@
 #!/bin/bash
 
-# all these commands should be run from main repo dir.
-cd `dirname $0`/../
+modules=(
+	modules/codebench		http://github.com/kohana/codebench.git
+	modules/database		http://github.com/kohana/database.git
+	modules/image			http://github.com/kohana/image.git
+	modules/orm				http://github.com/kohana/orm.git
+	modules/auth			http://github.com/kohana/auth.git
+	modules/userguide		http://github.com/kohana/userguide.git
+	modules/cache			http://github.com/kohana/cache.git
+	modules/unittest		http://github.com/kohana/unittest.git
+	modules/kostache		https://github.com/zombor/KOstache.git
+	modules/email			https://github.com/digitaljohn/kohana-email.git
+	modules/notice			https://github.com/loonies/kohana-notice.git
+	modules/vendo-acl		https://github.com/vendo/acl.git
+	modules/deta			https://github.com/shideon/deta.git
+)
 
-# installing git submodules.
-# TODO we should obviously just put all this stuff in an array to run eventually.
+# cd to basedir
+BASEDIR=$( cd $(dirname $(dirname $0)/../.) && pwd)
+cd $BASEDIR
 
-# system
-# this is kohana's core functionality
-# http://github.com/kohana/core
-git submodule add http://github.com/kohana/core.git system
+# we always install system
+echo "installing system..."
+if [ ! -d "system" ]; then
+	git submodule add http://github.com/kohana/core.git system
+fi
 
-# app modules.
-# determine which you need. comment those you don't. they can always
-# be added manually later.
-# we will most likely be using kohana-precept pretty often.
-# redbean is an addittional module that may be used.
+echo "what kohana modules do you want to install?"
+for i in "${!modules[@]}"; do
+	if [[ "$((i%2))" != "0" || -d "${modules[$i]}" ]]; then
+		continue
+	fi
+	echo -n "Do you want to install submodule ${modules[$i]}? [y/n]: "
+	read install
+	if [ "x$install" != "xy" ]; then
+		continue;
+	fi
+	echo "installing..."
+	git submodule add ${modules[$i+1]} ${modules[$i]}
+done
 
-# redbean orm integration
-# https://github.com/shideon/kohana-redbean
-#git submodule add https://github.com/shideon/kohana-redbean.git modules/redbean
-
-#########################################################
-### The rest of these are the official Kohana modules.
-### They may or may not be needed.
-#########################################################
-# codebench
-# http://github.com/kohana/codebench
-git submodule add http://github.com/kohana/codebench.git modules/codebench
-
-# database
-# http://github.com/kohana/database
-git submodule add http://github.com/kohana/database.git modules/database
-
-# image
-# http://github.com/kohana/image
-git submodule add http://github.com/kohana/image.git modules/image
-
-# orm
-# http://github.com/kohana/orm
-git submodule add http://github.com/kohana/orm.git modules/orm
-
-# auth
-# http://github.com/kohana/auth
-git submodule add http://github.com/kohana/auth.git modules/auth
-
-# userguide
-# http://github.com/kohana/userguide
-git submodule add http://github.com/kohana/userguide.git modules/userguide
-
-# cache
-# http://github.com/kohana/cache
-git submodule add http://github.com/kohana/cache.git modules/cache
-
-# unittest
-# http://github.com/kohana/unittest
-git submodule add http://github.com/kohana/unittest.git modules/unittest
-
-########################
-# This will recursively update all submodules and any additional submodules a submodule may have. It may take some time.
-# You can omit the `recursive` flag if you'd like and manually update the submodules you know have dependencies.
-git submodule update --init --recursive
+echo "done. nothing commited."
+echo "here's a git status. bye..."
+echo ""
+git status
