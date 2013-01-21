@@ -7,12 +7,15 @@ cd $BASEDIR
 # handle copyright
 year=$(date +%Y)
 orig_copy_year="${year}-$((year+1))"
-echo -n "Who is the copyright holder? "
+echo -n "Who is the copyright holder (John Pancoast)? "
 read copy_holder
 echo -n "What is the copyright year (${orig_copy_year})? "
 read  copy_year
 if [ -z "$copy_year" ]; then
 	copy_year=$orig_copy_year
+fi
+if [ -z "$copy_holder"]; then
+	copy_holder="John Pancoast"
 fi
 echo "${app_name} Copyright (c) ${copy_year} ${copy_holder}" > COPYRIGHT.md
 
