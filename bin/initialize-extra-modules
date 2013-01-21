@@ -1,0 +1,32 @@
+#!/bin/bash
+
+modules=(
+	modules/kostache		https://github.com/zombor/KOstache.git
+	modules/email			https://github.com/digitaljohn/kohana-email.git
+	modules/notice			https://github.com/loonies/kohana-notice.git
+	modules/vendo-acl		https://github.com/vendo/acl.git
+	modules/deta			https://github.com/shideon/deta.git
+)
+
+# cd to basedir
+BASEDIR=$( cd $(dirname $(dirname $0)/../.) && pwd)
+cd $BASEDIR
+
+for i in "${!modules[@]}"; do
+	if [[ "$((i%2))" != "0" || -d "${modules[$i]}" ]]; then
+		continue
+	fi
+	echo -n "Do you want to install submodule ${modules[$i]}? [y/n]: "
+	read install
+	if [ "x$install" != "xy" ]; then
+		continue;
+	fi
+	echo "installing..."
+	git submodule add ${modules[$i+1]} ${modules[$i]}
+done
+
+clear
+echo "done. nothing commited by the way."
+echo "here's a git status. bye..."
+echo ""
+git status
