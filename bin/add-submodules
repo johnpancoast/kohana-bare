@@ -1,19 +1,20 @@
 #!/bin/bash
 
 modules=(
-	modules/codebench		http://github.com/kohana/codebench.git
-	modules/database		http://github.com/kohana/database.git
-	modules/image			http://github.com/kohana/image.git
-	modules/orm				http://github.com/kohana/orm.git
-	modules/auth			http://github.com/kohana/auth.git
-	modules/userguide		http://github.com/kohana/userguide.git
-	modules/cache			http://github.com/kohana/cache.git
-	modules/unittest		http://github.com/kohana/unittest.git
-	modules/kostache		https://github.com/zombor/KOstache.git
-	modules/email			https://github.com/digitaljohn/kohana-email.git
-	modules/notice			https://github.com/loonies/kohana-notice.git
-	modules/vendo-acl		https://github.com/vendo/acl.git
-	modules/deta			https://github.com/shideon/deta.git
+	modules/codebench				http://github.com/kohana/codebench.git
+	modules/database				http://github.com/kohana/database.git
+	modules/image					http://github.com/kohana/image.git
+	modules/orm						http://github.com/kohana/orm.git
+	modules/auth					http://github.com/kohana/auth.git
+	modules/userguide				http://github.com/kohana/userguide.git
+	modules/cache					http://github.com/kohana/cache.git
+	modules/unittest				http://github.com/kohana/unittest.git
+	modules/kostache				https://github.com/zombor/KOstache.git
+	modules/email					https://github.com/digitaljohn/kohana-email.git
+	modules/notice					https://github.com/loonies/kohana-notice.git
+	modules/vendo-acl				https://github.com/vendo/acl.git
+	modules/deta					https://github.com/shideon/deta.git
+	modules/application-common		https://github.com/shideon/application-common.git
 )
 
 # cd to basedir
