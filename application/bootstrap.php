@@ -150,13 +150,13 @@ Kohana::modules(Kohana::$config->load('modules')->as_array());
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  *
- * note that ALL controller classes that are accessible from a requestshould be accessed
- * from the 'classes/Controller/Public' directory.
+ * note that ALL controller classes that are accessible from a request should be accessed
+ * from the 'classes/Controller/Route/' directory.
  */
 // default route. this should be our last route since it's a catch all.
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
-		'directory' => 'Public',
+		'directory' => 'Route',
 		'controller' => 'Index',
 		'action'     => 'index',
 	));
